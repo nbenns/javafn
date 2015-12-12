@@ -22,11 +22,11 @@ public class Either {
 		@Override
 		public String toString() {
 			return "Right<" +
-      	this.val
-        	.getClass()
-        	.toString()
-        	.split(" ")[1] +
-      	">(" + this.val + ")";
+				this.val
+				.getClass()
+				.toString()
+				.split(" ")[1] +
+				">(" + this.val + ")";
 		}
 	}
 
@@ -48,11 +48,11 @@ public class Either {
 		@Override
 		public String toString() {
 			return "Left<" +
-      	this.val
-        	.getClass()
-        	.toString()
-        	.split(" ")[1] +
-      	">(" + this.val + ")";
+				this.val
+				.getClass()
+				.toString()
+				.split(" ")[1] +
+				">(" + this.val + ")";
 		}
 	}
  

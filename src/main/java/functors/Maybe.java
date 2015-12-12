@@ -22,11 +22,11 @@ public class Maybe {
 		@Override
 		public String toString() {
 			return "Just<" +
-      	this.val
-        	.getClass()
-        	.toString()
-        	.split(" ")[1] +
-      	">(" + this.val + ")";
+				this.val
+				.getClass()
+				.toString()
+				.split(" ")[1] +
+				">(" + this.val + ")";
 		}
 	}
 

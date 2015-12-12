@@ -66,28 +66,28 @@ public class Ops {
 	}
 
 	public static <A, B, C, D, E> Function<A, E> compose(
-    Function<D, E> f4,
-    Function<C, D> f3,
-    Function<B, C> f2,
-    Function<A, B> f1
-  ) {
-    return (A a) -> f4.apply(
+		Function<D, E> f4,
+		Function<C, D> f3,
+		Function<B, C> f2,
+		Function<A, B> f1
+	) {
+		return (A a) -> f4.apply(
 			f3.apply(
 				f2.apply(
 					f1.apply(a)
 				)
 			)
 		);
-  }
+	}
 
 	public static <A, B, C, D, E, F> Function<A, F> compose(
-    Function<E, F> f5,
-    Function<D, E> f4,
-    Function<C, D> f3,
-    Function<B, C> f2,
-    Function<A, B> f1
-  ) {
-    return (A a) -> f5.apply(
+		Function<E, F> f5,
+		Function<D, E> f4,
+		Function<C, D> f3,
+		Function<B, C> f2,
+		Function<A, B> f1
+	) {
+		return (A a) -> f5.apply(
 			f4.apply(
 				f3.apply(
 					f2.apply(
@@ -100,13 +100,13 @@ public class Ops {
 
 	public static <A, B, C, D, E, F, G> Function<A, G> compose(
 		Function<F, G> f6,
-    Function<E, F> f5,
-    Function<D, E> f4,
-    Function<C, D> f3,
-    Function<B, C> f2,
-    Function<A, B> f1
-  ) {
-    return (A a) -> f6.apply(
+		Function<E, F> f5,
+		Function<D, E> f4,
+		Function<C, D> f3,
+		Function<B, C> f2,
+		Function<A, B> f1
+	) {
+		return (A a) -> f6.apply(
 			f5.apply(
 				f4.apply(
 					f3.apply(
@@ -117,5 +117,6 @@ public class Ops {
 				)
 			)
 		);
-  }
+	}
 }
+
