@@ -11,7 +11,7 @@ public class Maybe {
 			this.val = val;
 		}
 	
-		public Functor<T> chain(Function<T, Functor<T>> f) {
+		public <R> Functor<R> chain(Function<T, Functor<R>> f) {
 			return f.apply(this.val);
 		}
 
@@ -33,8 +33,8 @@ public class Maybe {
 	private static class Nothing<T> implements Functor<T> {
 		public Nothing(T val) {}
 
-		public Functor<T> chain(Function<T, Functor<T>> f) {
-			return new Nothing<T>(null);
+		public <R> Functor<R> chain(Function<T, Functor<R>> f) {
+			return new Nothing<R>(null);
 		}
 
 		public <R> Functor<R> map(Function<T, R> f) {

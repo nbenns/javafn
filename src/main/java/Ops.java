@@ -34,7 +34,7 @@ public class Ops {
 		return (Functor<T> F) -> F.map(f);
 	}
 
-	public static <T> Function<Functor<T>, Functor<T>> chain(Function<T, Functor<T>> f) {
+	public static <T,R> Function<Functor<T>, Functor<R>> chain(Function<T, Functor<R>> f) {
 		return (Functor<T> F) -> F.chain(f);
 	}
 

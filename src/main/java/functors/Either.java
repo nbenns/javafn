@@ -11,7 +11,7 @@ public class Either {
 			this.val = val;
 		}
 	
-		public Functor<T> chain(Function<T, Functor<T>> f) {
+		public <R> Functor<R> chain(Function<T, Functor<R>> f) {
 			return f.apply(this.val);
 		}
 
@@ -37,12 +37,12 @@ public class Either {
 			this.val = val;
 		}
 
-		public Functor<T> chain(Function<T, Functor<T>> f) {
-			return new Left<T>(this.val);
+		public <R> Functor<R> chain(Function<T, Functor<R>> f) {
+			return new Left<R>((R)this.val);
 		}
 
 		public <R> Functor<R> map(Function<T, R> f) {
-			return new Left<R>(f.apply(this.val));
+			return new Left<R>((R)this.val);
 		}
 
 		@Override
@@ -57,6 +57,10 @@ public class Either {
 	}
  
 	private Either() { }
+
+	public static <T> Functor<T> of(T left, T right) {
+		return (right == null) ? new Either.Left<T>(left) : new Either.Right<T>(right);
+	}
 
 	public static <T> Function<T, Functor<T>> of(T left) {
 		return (T right) -> (right == null) ? new Either.Left<T>(left) : new Either.Right<T>(right);
