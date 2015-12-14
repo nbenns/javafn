@@ -12,7 +12,7 @@ class either {
 
 		// Setup
 
-		final Function<List<String>, Functor<Integer>> multAndInc = Ops.compose(
+		final Function<List<String>, Functor<String>> multAndInc = Ops.compose(
 			Ops::log,
 			//Ops.chain(a -> Either.of(2, 4)),
 			Ops.map(Ops.concat(" was provided")),
