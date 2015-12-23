@@ -3,7 +3,7 @@ package javafn.examples;
 import java.util.List;
 import java.util.Arrays;
 import java.util.function.*;
-import javafn.Functor;
+import javafn.Monad;
 import javafn.functors.Either;
 import javafn.Ops;
 
@@ -12,15 +12,23 @@ class either {
 
 		// Setup
 
-		final Function<List<String>, Functor<String>> multAndInc = Ops.compose(
+		Function<List<String>, Either> getFirstArg = n -> {
+			try {
+				return Either.right(n.get(0));
+			} catch (Exception ex) {
+				return Either.left(ex.toString());
+			}
+		};
+
+		final Function<List<String>, Monad> concatNLog = Ops.compose(
 			Ops::log,
-			//Ops.chain(a -> Either.of(2, 4)),
+			Ops.chain(x -> Either.left("meow")),
 			Ops.map(Ops.concat(" was provided")),
-			Either.of(a -> a.get(0), "nothing provided")
+			getFirstArg
 		);
 
 		// Execute
 
-		multAndInc.apply(Arrays.asList(args));
+		concatNLog.apply(Arrays.asList(args));
 	}
 }

@@ -2,20 +2,21 @@ package javafn.functors;
 
 import java.util.function.*;
 import javafn.Functor;
+import javafn.Monad;
 
-public class Either {
-	private static class Right<T> implements Functor<T> {
+public abstract class Either<T> implements Monad<T> {
+	public static class Right<T> extends Either<T> {
 		private T val;
 
-		public Right(T val) {
+		private Right(final T val) {
 			this.val = val;
 		}
 	
-		public <R> Functor<R> chain(Function<T, Functor<R>> f) {
-			return f.apply(this.val);
+		public <R> Either<R> chain(final Function<T, ? extends Monad<R>> f) {
+			return (Either<R>)f.apply(this.val);
 		}
 
-		public <R> Functor<R> map(Function<T, R> f) {
+		public <R> Right<R> map(final Function<T, R> f) {
 			return new Right<R>(f.apply(this.val));
 		}
 
@@ -30,18 +31,18 @@ public class Either {
 		}
 	}
 
-	private static class Left<T> implements Functor<T> {
+	private static class Left<T> extends Either<T> {
 		private T val;
 
 		public Left(T val) {
 			this.val = val;
 		}
 
-		public <R> Functor<R> chain(Function<T, Functor<R>> f) {
+		public <R> Either<R> chain(final Function<T, ? extends Monad<R>> f) {
 			return new Left<R>((R)this.val);
 		}
 
-		public <R> Functor<R> map(Function<T, R> f) {
+		public <R> Left<R> map(final Function<T, R> f) {
 			return new Left<R>((R)this.val);
 		}
 
@@ -57,24 +58,12 @@ public class Either {
 	}
  
 	private Either() { }
-
-	public static <T> Functor<T> of(T left, T right) {
-		return (right == null) ? new Either.Left<T>(left) : new Either.Right<T>(right);
+	
+	public static <T> Either<T> right(final T t) {
+		return new Right<T>(t);
 	}
-
-	public static <T> Function<T, Functor<T>> of(T left) {
-		return (T right) -> (right == null) ? new Either.Left<T>(left) : new Either.Right<T>(right);
-	}
-
-	public static <S, T> Function<S, Functor<T>> of(Function<S, T> f, T left) {
-		return (S right) -> {
-			try {
-				T val = f.apply(right);
-
-				return (val == null) ? new Either.Left<T>(left) : new Either.Right<T>(val);
-			} catch (Exception ex) {
-				return new Either.Left<T>(left);
-			}
-		};
+	
+	public static <T> Either<T> left(final T t) {
+		return new Left<T>(t);
 	}
 }

@@ -30,48 +30,48 @@ public class Ops {
 		return (String a) -> a.concat(b);
 	}
 
-	public static <T, R> Function<Functor<T>, Functor<R>> map(Function<T, R> f) {
-		return (Functor<T> F) -> F.map(f);
+	public static Function<Functor, Functor> map(Function f) {
+		return (Functor F) -> F.map(f);
 	}
 
-	public static <T,R> Function<Functor<T>, Functor<R>> chain(Function<T, Functor<R>> f) {
-		return (Functor<T> F) -> F.chain(f);
+	public static <T,R> Function<Monad<T>, Monad<R>> chain(Function<T, Monad<R>> f) {
+		return (Monad<T> F) -> F.chain(f);
 	}
 
-	public static <A, B> Function<A, B> compose(
-		Function<A, B> f1
+	public static Function compose(
+		Function f1
 	) {
-		return (A a) -> f1.apply(a);
+		return a -> f1.apply(a);
 	}
 
-	public static <A, B, C> Function<A, C> compose(
-		Function<B, C> f2,
-		Function<A, B> f1
+	public static Function compose(
+		Function f2,
+		Function f1
 	) {
-		return (A a) -> f2.apply(
+		return a -> f2.apply(
 			f1.apply(a)
 		);
 	}
 
-	public static <A, B, C, D> Function<A, D> compose(
-		Function<C, D> f3,
-		Function<B, C> f2,
-		Function<A, B> f1
+	public static Function compose(
+		Function f3,
+		Function f2,
+		Function f1
 	) {
-		return (A a) -> f3.apply(
+		return a -> f3.apply(
 			f2.apply(
 				f1.apply(a)
 			)
 		);
 	}
 
-	public static <A, B, C, D, E> Function<A, E> compose(
-		Function<D, E> f4,
-		Function<C, D> f3,
-		Function<B, C> f2,
-		Function<A, B> f1
+	public static Function compose(
+		Function f4,
+		Function f3,
+		Function f2,
+		Function f1
 	) {
-		return (A a) -> f4.apply(
+		return a -> f4.apply(
 			f3.apply(
 				f2.apply(
 					f1.apply(a)
@@ -80,14 +80,14 @@ public class Ops {
 		);
 	}
 
-	public static <A, B, C, D, E, F> Function<A, F> compose(
-		Function<E, F> f5,
-		Function<D, E> f4,
-		Function<C, D> f3,
-		Function<B, C> f2,
-		Function<A, B> f1
+	public static Function compose(
+		Function f5,
+		Function f4,
+		Function f3,
+		Function f2,
+		Function f1
 	) {
-		return (A a) -> f5.apply(
+		return a -> f5.apply(
 			f4.apply(
 				f3.apply(
 					f2.apply(
@@ -98,15 +98,15 @@ public class Ops {
 		);
   }
 
-	public static <A, B, C, D, E, F, G> Function<A, G> compose(
-		Function<F, G> f6,
-		Function<E, F> f5,
-		Function<D, E> f4,
-		Function<C, D> f3,
-		Function<B, C> f2,
-		Function<A, B> f1
+	public static Function compose(
+		Function f6,
+		Function f5,
+		Function f4,
+		Function f3,
+		Function f2,
+		Function f1
 	) {
-		return (A a) -> f6.apply(
+		return a -> f6.apply(
 			f5.apply(
 				f4.apply(
 					f3.apply(

@@ -12,14 +12,22 @@ class maybe {
 
 		// Setup
 		
-		final Function<List<String>, Functor<String>> multAndInc = Ops.compose(
+		Function<List<String>, Maybe> getFirstArg = n -> {
+			try {
+				return Maybe.just(n.get(0));
+			} catch (Exception ex) {
+				return Maybe.nothing();
+			}
+		};
+		
+		final Function<List<String>, Functor<String>> concatNLog = Ops.compose(
 			Ops::log,
 			Ops.map(Ops.concat(" was provided")),
-			Maybe.of(a -> a.get(0))
+			getFirstArg
 		);
 
 		// Execute
 
-		multAndInc.apply(Arrays.asList(args));
+		concatNLog.apply(Arrays.asList(args));
 	}
 }

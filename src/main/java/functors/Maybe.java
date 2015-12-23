@@ -2,20 +2,21 @@ package javafn.functors;
 
 import java.util.function.*;
 import javafn.Functor;
+import javafn.Monad;
 
-public class Maybe {
-	private static class Just<T> implements Functor<T> {
+public abstract class Maybe<T> implements Monad<T> {
+	private static class Just<T> extends Maybe<T> {
 		private T val;
 
-		public Just(T val) {
+		public Just(final T val) {
 			this.val = val;
 		}
 	
-		public <R> Functor<R> chain(Function<T, Functor<R>> f) {
-			return f.apply(this.val);
+		public <R> Maybe<R> chain(final Function<T, ? extends Monad<R>> f) {
+			return (Maybe<R>)f.apply(this.val);
 		}
 
-		public <R> Functor<R> map(Function<T, R> f) {
+		public <R> Just<R> map(final Function<T, R> f) {
 			return new Just<R>(f.apply(this.val));
 		}
 
@@ -30,15 +31,15 @@ public class Maybe {
 		}
 	}
 
-	private static class Nothing<T> implements Functor<T> {
-		public Nothing(T val) {}
+	private static class Nothing<T> extends Maybe<T> {
+		public Nothing() {}
 
-		public <R> Functor<R> chain(Function<T, Functor<R>> f) {
-			return new Nothing<R>(null);
+		public <R> Maybe<R> chain(final Function<T, ? extends Monad<R>> f) {
+			return new Nothing<R>();
 		}
 
-		public <R> Functor<R> map(Function<T, R> f) {
-			return new Nothing<R>(null);
+		public <R> Nothing<R> map(final Function<T, R> f) {
+			return new Nothing<R>();
 		}
 
 		@Override
@@ -49,19 +50,11 @@ public class Maybe {
  
 	private Maybe() { }
 
-	public static <T> Functor<T> of(T val) {
-		return (val == null) ? new Maybe.Nothing<T>(val) : new Maybe.Just<T>(val);
+	public static <T> Maybe<T> just(final T t) {
+		return new Just<T>(t);
 	}
-
-	public static <S, T> Function<S, Functor<T>> of(Function<S, T> f) {
-		return (S s) -> {
-			try {
-				T val = f.apply(s);
-
-				return (val == null) ? new Maybe.Nothing<T>(val) : new Maybe.Just<T>(val);
-			} catch (Exception ex) {
-				return new Maybe.Nothing<T>(null);
-			}
-		};
+	
+	public static <T> Maybe<T> nothing() {
+		return new Nothing<T>();
 	}
 }
