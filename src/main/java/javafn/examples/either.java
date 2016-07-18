@@ -6,6 +6,8 @@ import java.util.function.*;
 import javafn.Monad;
 import javafn.functors.Either;
 import javafn.Ops;
+import static javafn.Ops.*;
+import static javafn.functors.Either.*;
 
 class either {
 	public static void main(String [] args)  {
@@ -14,16 +16,15 @@ class either {
 
 		Function<List<String>, Either> getFirstArg = n -> {
 			try {
-				return Either.right(n.get(0));
+				return Right(n.get(0));
 			} catch (Exception ex) {
-				return Either.left(ex.toString());
+				return Left(ex.toString());
 			}
 		};
 
-		final Function<List<String>, Monad> concatNLog = Ops.compose(
-			Ops::log,
-			Ops.chain(x -> Either.left("meow")),
-			Ops.map(Ops.concat(" was provided")),
+		final Function<List<String>, Monad> concatNLog = compose(
+			Ops::mLog,
+			map(concat(" was provided")),
 			getFirstArg
 		);
 
